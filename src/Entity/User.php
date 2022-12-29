@@ -30,7 +30,7 @@ class User
     #[ORM\Column(length: 30)]
     private ?string $city = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
+    #[ORM\Column(length: 15)]
     private ?string $phone = null;
 
     #[ORM\Column(length: 50)]
