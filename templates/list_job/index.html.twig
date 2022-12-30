@@ -1,0 +1,31 @@
+{% extends 'base2.html.twig' %}
+{% block title %}Hello AdminController!{% endblock %}
+{% block body %}
+<h1> Listing of Jobs</h1>
+<table border=2 class="table table-hover table-bordered" style="width:50%" >
+<thead><tr class="info" >
+<th class="text-primary">id</th> 
+<th class="text-primary">JobTitle</th>
+<th class="text-primary">Skills</th>
+<th class="text-primary">Experience</th>
+<th class="text-primary">Location</th>
+
+ <tr>
+    {% for job in jobs %}
+       <tr class="warning"  > 
+       <td>{{job.id}}</td> 
+       <td>{{job.job_title}}</td>
+       <td>{{job.skills}}</td>
+       <td>{{job.experience}}</td>
+       <td>{{job.job_location}}</td>
+    {# <td>{{job.job_title}}</td> #}
+       <td><form name="form" action="" method="POST"><button  class="btn btn-primary active" formaction="{{path('app_admin')}}">Edit</button></form> </td>
+       <td><form name="form" action="" method="POST"><button  class="btn btn-primary active" formaction="{{path('app_admin')}}">Delete</button></form> </td>
+       <td><form name="form" action="" method="POST"><button class="btn btn-primary active" formaction="{{path('app_admin')}}">View</button></form> </td>
+       <br><br>
+</tr> 
+{% endfor%}
+ </table> 
+
+{% endblock %}
+
