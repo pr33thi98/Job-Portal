@@ -1,0 +1,11 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+{% for use in data %}
+<h1>{{ use.id}}</h1>
+ {# <tr class="warning"  > 
+       <td>{{use.id}}</td> 
+       <td>{{use.job_title}}</td>
+       <td>{{use.job.skills}}</td>
+  </tr >  #}
+{% endfor %}
+{% endblock %} 

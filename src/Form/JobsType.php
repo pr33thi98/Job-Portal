@@ -20,6 +20,8 @@ class JobsType extends AbstractType
             // ->add('created_at')
             // ->add('modified_at')
             ->add('expiry')
+            // ->add('save', SubmitType::class, ['label' => 'Job added'])
+            ->getForm();
         ;
     }
 

@@ -42,7 +42,6 @@ class Jobs
     {
         return $this->id;
     }
-
     public function getJobTitle(): ?string
     {
         return $this->job_title;
@@ -91,6 +90,42 @@ class Jobs
         return $this;
     }
 
+    public function getjob_title(): ?string
+    {
+        return $this->job_title;
+    }
+
+    public function setjob_title(string $job_title): self
+    {
+        $this->job_title = $job_title;
+
+        return $this;
+    }
+
+    public function getjob_description(): ?string
+    {
+        return $this->job_description;
+    }
+
+    public function setjob_description(string $job_description): self
+    {
+        $this->job_description = $job_description;
+
+        return $this;
+    }
+
+    public function getjob_location(): ?string
+    {
+        return $this->job_location;
+    }
+
+    public function setjob_location(string $job_location): self
+    {
+        $this->job_location = $job_location;
+
+        return $this;
+    }
+
     public function getExperience(): ?int
     {
         return $this->experience;
@@ -103,29 +138,51 @@ class Jobs
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getcreated_at(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setcreated_at(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
+    // public function getCreatedAt(): ?\DateTimeInterface
+    // {
+    //     return $this->created_at;
+    // }
 
-    public function getModifiedAt(): ?\DateTimeInterface
+    // public function setCreatedAt(\DateTimeInterface $created_at): self
+    // {
+    //     $this->created_at = $created_at;
+
+    //     return $this;
+    // }
+
+    public function getmodified_at(): ?\DateTimeInterface
     {
         return $this->modified_at;
     }
 
-    public function setModifiedAt(?\DateTimeInterface $modified_at): self
+    public function setmodified_at(?\DateTimeInterface $modified_at): self
     {
         $this->modified_at = $modified_at;
 
         return $this;
     }
+    // public function getModifiedAt(): ?\DateTimeInterface
+    // {
+    //     return $this->modified_at;
+    // }
+
+    // public function setModifiedAt(?\DateTimeInterface $modified_at): self
+    // {
+    //     $this->modified_at = $modified_at;
+
+    //     return $this;
+    // }
 
     public function getExpiry(): ?\DateTimeInterface
     {

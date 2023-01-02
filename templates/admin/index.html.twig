@@ -10,11 +10,20 @@
 
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/jishnu/Desktop/Project/Job-Portal/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/jishnu/Desktop/Project/Job-Portal/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    {# <button>click here to add jobs</button>
+    <button>click here to list jobs</button>
+    <button>click here to list the applicants </button> #}
+    <form name="form" action="" method="POST">
+    <button style='font-size:24px' formaction="{{path('app_job_form')}}">click here to add jobs</button>
+    </form>
+    <br><br>
+    <form name="form1" action="" method="POST">
+    <button style='font-size:24px' formaction="{{path('app_list_job')}}">click here to list jobs</button>
+    </form>
+    <br><br>
+    <form name="form2" action="" method="POST">
+    <button style='font-size:24px' formaction="{{path('app_applicant')}}">click here to list applicants</button>
+    </form>
+    
 </div>
 {% endblock %}

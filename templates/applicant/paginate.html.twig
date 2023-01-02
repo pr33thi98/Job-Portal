@@ -1,0 +1,15 @@
+{% for job in pagination %}
+       <tr class="warning"  > 
+       <td>{{job.id}}</td> 
+       {# <td>{{job.job_id}}</td> #}
+       {# <td>{{job.applied_at}}</td> #}
+       <td>{{job.resume}}</td>
+       <td>{{job.email}}</td>
+
+    {# <td>{{job.job_title}}</td> #}
+       {# {# <td><form name="form" action="" method="POST"><button  class="btn btn-primary active" formaction="{{path('app_admin')}}">Edit</button></form> </td> #}
+       <td><form name="form" action="" method="POST"><button  class="btn btn-primary active" formaction="{{path('app_admin')}}">View resume</button></form> </td>
+       {# <td><form name="form" action="" method="POST"><button class="btn btn-primary active" formaction="{{path('app_admin')}}">View</button></form> </td>
+       <br><br>  #}
+</tr> 
+{% endfor%}

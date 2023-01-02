@@ -7,36 +7,68 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\JobsRepository;
 use App\Form\JobsType;
 class JobFormController extends AbstractController
 {
     #[Route('/job/form', name: 'app_job_form')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request,JobsRepository $repo, EntityManagerInterface $entityManager): Response
     {
-        $jobs = new Jobs();
+        if ($request->isMethod('POST'))
+        {
+            $id=$request->request->get('id');
 
-        // print_r($jobs);
+            $data = $repo->find($id);
 
-        $form = $this->createForm(JobsType::class, $jobs);
+            $data->setJobTitle($data->getJobTitle());
 
-        $form->handleRequest($request);
+            $data->setJobDescription($data->getJobDescription());
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $data->setSkills($data->getSkills());
 
-            $date =  new \DateTime('@'.strtotime('now'));
+            $data->setJobDescription($data->getJobDescription());
 
-            $jobs->setCreatedAt($date);
+            $data->setJobLocation($data->getJobLocation());
 
-            $jobs->setModifiedAt($date);
+            $data->setExperience($data->getExperience());
 
-            $entityManager->persist($jobs);
+            $data->setExpiry($data->getExpiry());
 
-            $entityManager->flush();
-        }
-
-        return $this->render('job_form/index.html.twig', [
             
-            'JobsForm' => $form->createView(),
-        ]);
-    }
+
+            
+       }
+        else{
+            
+//;
+    //}
+            // if($request)
+
+            $jobs = new Jobs();
+
+            // print_r($jobs);
+
+            $form = $this->createForm(JobsType::class, $jobs);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $date =  new \DateTime('@'.strtotime('now'));
+
+                $jobs->setcreated_at($date);
+
+                $jobs->setmodified_at($date);
+
+                $entityManager->persist($jobs);
+
+                $entityManager->flush();
+            }
+
+            return $this->render('job_form/index.html.twig', [
+                
+                'JobsForm' => $form->createView(),
+            ]);
+
+}
 }

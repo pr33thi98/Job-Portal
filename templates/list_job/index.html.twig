@@ -9,7 +9,7 @@
 <th class="text-primary">Skills</th>
 <th class="text-primary">Experience</th>
 <th class="text-primary">Location</th>
-
+<th class = "text-primary">Action</th>
  <tr>
     {% for job in jobs %}
        <tr class="warning"  > 
@@ -18,14 +18,42 @@
        <td>{{job.skills}}</td>
        <td>{{job.experience}}</td>
        <td>{{job.job_location}}</td>
-    {# <td>{{job.job_title}}</td> #}
-       <td><form name="form" action="" method="POST"><button  class="btn btn-primary active" formaction="{{path('app_admin')}}">Edit</button></form> </td>
-       <td><form name="form" action="" method="POST"><button  class="btn btn-primary active" formaction="{{path('app_admin')}}">Delete</button></form> </td>
-       <td><form name="form" action="" method="POST"><button class="btn btn-primary active" formaction="{{path('app_admin')}}">View</button></form> </td>
+       <td><a href="{{absolute_url(asset(''))}}view/job/{{job.id}}">View</a>
+      {# <td><form name="form" action="" method="POST"><button  class="btn btn-primary active">Edit</button></form> </td> #}
+       <td><form name="form" action="" method="POST"><button  class="btn1 btn-primary active">Delete</button></form> </td>
+       <td><a href="{{absolute_url(asset(''))}}job/form/{{job.id}}">Edit</a>
+       {# <td><form name="form" action="" method="POST"><button class="btn2 btn-primary active">View</button></form> </td> #}
        <br><br>
 </tr> 
 {% endfor%}
  </table> 
-
+<script>
+$(document).ready(function()
+{
+    
+    $('.btn1').click(function()
+    {
+       var currentRow = $(this).closest("tr");
+       var col1 = currentRow.find("td:eq(0)").text();
+       $.ajax(
+                {
+                    type: "POST",
+                    data:{ id:col1},
+                    url: '{{ (path('app_delete_job')) }}',
+                    success: function(response)
+                    {
+                       alert(col1);
+                        alert(response.message);
+                         
+                    },
+                    error: function(result)
+                    {
+                        alert("Process Failed!!!");
+                    }
+                });
+    })
+    
+})
+</script>
 {% endblock %}
 
