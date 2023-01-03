@@ -3,18 +3,123 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function()
+    {
+        $('#logType').click(function()
+        {
+            var log = $('#logType').val();
+            if(log == "Error Logs")
+            {
+                var l = 0;
+            }
+            else
+            {
+                var l = 1;
+            }
+            $.ajax(
+                {
+                    type: "POST",
+                    data: { type:l},
+                    url: '{{ (path('app_log')) }}',
+                    success: function(result)
+                    {
+                        alert("Successs");
+                    },
+                    error: function(result)
+                    {
+                        alert("Fail");
+                    }
+                });
+        });
+        $('#module').click(function()
+        {
+            var mod = $('#module').val();
+            if(mod == "User")
+            {
+                var m =1;
+            }
+            else if(mod=="Applications")
+            {
+                var m=2;
+            }
+            else
+            {
+                var m=3;
+            }
+            $.ajax(
+                {
+                    type: "POST",
+                    data: {module:m},
+                    url: '{{ (path('app_log')) }}',
+                    success: function(result)
+                    {
+                        alert('success');
+                    },
+                    error: function(result)
+                    {
+                        alert("Error");
+                    } 
+                });
+        });
+        $('#filter').click(function()
+        {
+            var mod = $('#module').val();
+
+            if(mod == "User")
+            {
+                var m =1;
+            }
+            else if(mod == "Applications")
+            {
+                var m=2;
+            }
+            else
+            {
+                var m=3;
+            }
+
+            var log = $('#logType').val();
+
+            if(log == "Error Logs")
+            {
+                var l = 0;
+            }
+            else
+            {
+                var l = 1;
+            }
+
+            $.ajax(
+                {
+                    type: "POST",
+                    data: {module:m, type:l},
+                    url: '{{ (path('app_log')) }}',
+                    success: function(result)
+                    {
+                        alert('success');
+                    },
+                    error: function(result)
+                    {
+                        alert("Error");
+                    }
+                });
+        });
+    })
+</script>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/jishnu/Desktop/Project/Job-Portal/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/jishnu/Desktop/Project/Job-Portal/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    <h3>Logs</h3>
+    <select id="logType">
+        <option>Error Logs</option>
+        <option>Success Logs</option>
+    </select>
+    <select id="module">
+        <option>User</option>
+        <option>Applications</option>
+        <option>Job Postings</option>
+    </select>
+    <button id="filter">Filter</button>
 </div>
 {% endblock %}
