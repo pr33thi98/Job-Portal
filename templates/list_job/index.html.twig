@@ -11,22 +11,21 @@
 <th class="text-primary">Location</th>
 <th class = "text-primary">Action</th>
  <tr>
-    {% for job in jobs %}
+    {% for job in job %}
        <tr class="warning"  > 
        <td>{{job.id}}</td> 
        <td>{{job.job_title}}</td>
        <td>{{job.skills}}</td>
        <td>{{job.experience}}</td>
        <td>{{job.job_location}}</td>
-       <td><a href="{{absolute_url(asset(''))}}view/job/{{job.id}}">View</a>
-      {# <td><form name="form" action="" method="POST"><button  class="btn btn-primary active">Edit</button></form> </td> #}
-       <td><form name="form" action="" method="POST"><button  class="btn1 btn-primary active">Delete</button></form> </td>
-       <td><a href="{{absolute_url(asset(''))}}job/form/{{job.id}}">Edit</a>
-       {# <td><form name="form" action="" method="POST"><button class="btn2 btn-primary active">View</button></form> </td> #}
+       <td><a href="{{absolute_url(asset(''))}}view/job/{{job.id}}">View</a></td>
+       <td><a href="{{absolute_url(asset(''))}}job/form/{{job.id}}">Edit</a></td>
+        <td><form name="form" action="" method="POST"><button  class="btn1 btn-primary active">Delete</button></form> </td>
        <br><br>
 </tr> 
-{% endfor%}
- </table> 
+{% endfor%} 
+ </table>
+ {{ knp_pagination_render(job) }}
 <script>
 $(document).ready(function()
 {

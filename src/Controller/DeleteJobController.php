@@ -16,7 +16,6 @@ class DeleteJobController extends AbstractController
     {
         $id=$request->request->get('id');
 
-        // $id=9;
 
         $data = $repo->findOneBy(["id"=>$id]);
 

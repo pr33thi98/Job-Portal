@@ -9,21 +9,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobsRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 class ListJobController extends AbstractController
 {
     #[Route('/list/job', name: 'app_list_job')]
-    public function index(JobsRepository $repo,Request $request): Response
+    public function index(JobsRepository $repo,Request $request,PaginatorInterface $paginator ): Response
     {
 
         $jobs = $repo->findAll();
-
-        // print_r($jobs);
-
-        
+        $pagination=$paginator->paginate(
+            $jobs,
+            $request->query->getInt('page',1),
+            5
+        ); 
 
         return $this->render('list_job/index.html.twig', [
-            'jobs' => $jobs,
+            'job' => $pagination,
         ]);
     }
 }

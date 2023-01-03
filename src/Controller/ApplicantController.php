@@ -21,18 +21,18 @@ class ApplicantController extends AbstractController
     public function UserList(Request $request,ApplicationRepository $repo,PaginatorInterface $paginator):Response
     {
         $Applications = $repo->findAll(); 
-        // $limit=1;
-        // $offset=3;
-        // $pagination=$paginator->paginate(
-        //     $Applications,
-        //     $request->query->getInt('page',$limit),
-        //     $offset
-        // ) ; 
-         $pagination=$paginator->paginate(
+        $limit=1;
+        $offset=3;
+        $pagination=$paginator->paginate(
             $Applications,
-            $request->query->getInt('page',1),
-            3
-        ); 
+            $request->query->getInt('page',$limit),
+            $offset
+        ) ; 
+        //  $pagination=$paginator->paginate(
+        //     $Applications,
+        //     $request->query->getInt('page',1),
+        //     3
+        // ); 
         $list = $this->render('applicant/paginate.html.twig', array(
             'pagination'=>$pagination
 

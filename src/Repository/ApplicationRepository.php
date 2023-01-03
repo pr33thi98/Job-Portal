@@ -63,4 +63,14 @@ class ApplicationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function  fetchname($id)
+    {
+        $det = $this->findOneBy(['id' => $id]);
+
+        $resume=$det->getResume();
+
+        return $resume;
+
+
+    }
 }

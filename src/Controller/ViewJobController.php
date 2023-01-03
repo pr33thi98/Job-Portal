@@ -23,7 +23,7 @@ class ViewJobController extends AbstractController
 
         echo "</prev>";
 
-        // exit();
+        exit();
 
         return $this->render('view_job/index.html.twig', [
             'data' => $data,
