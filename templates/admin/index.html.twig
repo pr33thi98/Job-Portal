@@ -6,7 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $(document).ready(function()
-    {
+    {   
         $('#logType').click(function()
         {
             var log = $('#logType').val();
@@ -22,10 +22,15 @@
                 {
                     type: "POST",
                     data: { type:l},
-                    url: '{{ (path('app_log')) }}',
-                    success: function(result)
+                    url: '{{ (path('app_paginate')) }}',
+                    success: function(response)
                     {
-                        alert("Successs");
+                        console.log(response);
+                        numberOfItems =response.count
+                        numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                        $('#list').empty().append(response.pagination)
+                    
+                        buildPagination(currPage)
                     },
                     error: function(result)
                     {
@@ -52,10 +57,14 @@
                 {
                     type: "POST",
                     data: {module:m},
-                    url: '{{ (path('app_log')) }}',
-                    success: function(result)
+                    url: '{{ (path('app_paginate')) }}',
+                    success: function(response)
                     {
-                        alert('success');
+                        numberOfItems =response.count
+                        numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                        $('#list').empty().append(response.pagination)
+                    
+                        buildPagination(currPage)
                     },
                     error: function(result)
                     {
@@ -95,20 +104,95 @@
                 {
                     type: "POST",
                     data: {module:m, type:l},
-                    url: '{{ (path('app_log')) }}',
-                    success: function(result)
+                    url: '{{ (path('app_paginate')) }}',
+                    success: function(response)
                     {
-                        alert('success');
+                         numberOfItems =response.count
+                        numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                        $('#list').empty().append(response.pagination)
+                    
+                        buildPagination(currPage)
                     },
-                    error: function(result)
+                    error: function(response)
                     {
-                        alert("Error");
+                         numberOfItems =response.count
+                        numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                        $('#list').empty().append(response.pagination)
+                    
+                        buildPagination(currPage)
                     }
                 });
         });
     })
 </script>
 
+<script>
+        var numberOfItems = 0
+        var numberPerPage = 3
+        var currentPage = 1
+        var numberOfPages = 0
+        
+        function accomodatePage(clickedPage) 
+        {
+            if (clickedPage <= 1) { return clickedPage + 1}
+            if (clickedPage >= numberOfPages) { return clickedPage -1}
+            return clickedPage
+        }
+
+        function buildPagination(clickedPage) 
+        {
+            $('.paginator').empty()
+            const currPageNum = accomodatePage(clickedPage)
+            if (numberOfPages >= 3) 
+            {
+                for (let i=-1; i<2; i++) 
+                {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${currPageNum+i}">${currPageNum+i}</button>`)
+                }
+            } 
+            else 
+            {
+                for (let i=0; i<numberOfPages; i++) 
+                {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${i+1}">${i+1}</button>`)
+                }
+            }
+        }
+
+        function buildPage(currPage) 
+        {
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '{{( path('app_paginate') )}}?page='+currPage,
+                    success: function(response)
+                    {
+                        numberOfItems =response.count
+                        numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                        $('#list').empty().append(response.pagination)
+                    
+                        buildPagination(currPage)
+                    },
+                error: function (xhr, status, error) 
+                {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        }
+
+        $(document).ready(function()
+        {
+            buildPage(1)
+            
+            $('.paginator').on('click', 'button', function() 
+            {
+                var clickedPage = parseInt($(this).val())
+                
+                console.log(`Page clicked on ${clickedPage}`)
+                buildPage(clickedPage)
+            });
+        });
+</script>
 <div class="example-wrapper">
     <h3>Logs</h3>
     <select id="logType">
@@ -120,6 +204,12 @@
         <option>Applications</option>
         <option>Job Postings</option>
     </select>
-    <button id="filter">Filter</button>
+    <button id="filter">Filter</button><br><br>
+</div>
+<table>
+    <tbody id="list" ></tbody>
+</table>
+<div class='paginator'>
+
 </div>
 {% endblock %}

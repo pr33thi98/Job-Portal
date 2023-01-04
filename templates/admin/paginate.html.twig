@@ -1,0 +1,9 @@
+{% for log in pagination %}
+       <tr class="warning"  > 
+        <td>{{log.id}}</td> 
+        <td>{{log.userid}}</td>
+        <td>{{log.logtime | date('Y-m-d') }}</td>
+        <td>{{log.jobid}}</td>
+        <td>{{log.description}}</td>
+       </tr> 
+{% endfor%}

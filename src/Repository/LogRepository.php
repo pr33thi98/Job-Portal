@@ -39,44 +39,22 @@ class LogRepository extends ServiceEntityRepository
         }
     }
 
-    public function logType($type): array
-    {
-        // $fresult = (($pageno-1)*10);
-        return $this->createQueryBuilder('l')
-                    ->andWhere('l.type = :val')
-                    ->setParameter('val', $type)
-                    ->orderBy('l.id', 'ASC')
-                    // ->setFirstResult($fresult)
-                    ->setMaxResults(10)
-                    ->getQuery()
-                    ->getArrayResult()
-                    ;
-    }    
-
-    public function moduleFilter($module):array
-    {
-        // $fresult = (($pageno-1)*10);
-        return $this->createQueryBuilder('l')
-                    ->andWhere('l.module = :val')
-                    ->setParameter('val', $module)
-                    ->orderBy('l.id','ASC')
-                    // ->setFirstResult($fresult)
-                    ->setMaxResults(10)
-                    ->getQuery()
-                    ->getArrayResult()
-                    ;
-    }
-
     public function filter($module, $type)
     {
-        return $this->createQueryBuilder('f')
-                    ->andWhere('f.module = :val AND f.type = :val2')
-                    ->setParameter('val',$module)
-                    ->setParameter('val2',$type)
-                    ->setMaxResults(10)
-                    ->getQuery()
-                    ->getArrayResult()
-                    ;
+        $query = $this->createQueryBuilder('f');
+        
+            if( !empty($type) || ($type === 0))
+            {
+                 $query->where('f.type = :type')
+                             ->setParameter('type',$type);
+            }
+            if(!empty($module) || $module === 0)
+            {
+                 $query->andWhere('f.module = :module')
+                             ->setParameter('module',$module);
+            }
+            $query->setMaxResults(5);
+        return $query->getQuery()->getResult();
     }
 //    /**
 //     * @return Log[] Returns an array of Log objects

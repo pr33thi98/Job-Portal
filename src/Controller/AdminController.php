@@ -3,87 +3,56 @@
 namespace App\Controller;
 
 use App\Class\Producer;
-use App\Entity\Log;
 use App\Repository\LogRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 class AdminController extends AbstractController
 {
-    
     #[Route('/admin/log', name: 'app_log')]
-    // public function logDisplay(Request $request, LogRepository $log)
-    // {
-    //     if($request->isMethod('POST'))
-    //     {
-    //         $type = $request->request->get('type');
-    //         if (is_integer($type))
-    //         {
-    //             $logs = $log->logType($type);
-
-    //             return $logs;
-    //         }
-    //     }
-    // }
-
-    // public function logModule(Request $request, LogRepository $log)
-    // {
-    //     if($request->isMethod('POST'))
-    //     {
-    //         $module = $request->request->get('module');
-    //         if (is_integer($module))
-    //         {
-    //             $modules = $log->moduleFilter($module);
-
-    //             return $modules;
-    //         }
-    //     }
-    // }
-
-    // public function logDisplay(Request $request, LogRepository $log)
-    // {
-    //     if($request->isMethod('POST'))
-    //     {
-    //         if( !empty($request->request->get('type')) && !empty($request->request->get('module')) )
-    //         {
-    //             $logtype = $request->request->get('type');
-
-    //             $module = $request->request->get('module');
-
-    //             $logs = $log->filter($module, $logtype);
-    //         }
-
-    //         elseif( !empty($request->request->get('type')) )
-    //         {
-    //             $logtype = $request->request->get('type');
-
-    //             $logs = $log->logType($logtype);
-    //         }
-
-    //         else
-    //         {
-    //             $module = $request->request->get('module');
-
-    //             $logs = $log->moduleFilter($module);
-    //         }
-    //     }
-    // }
-    public function index(LogRepository $log): Response
+    public function index(LogRepository $repo):Response
     {
-        // $prod = new Producer();
+        // $log = $repo->findAll();
+        // return $this->render('admin/index.html.twig', array('logs'=>$log));
+        return $this->render('admin/index.html.twig');
+    }
+    
+    #[Route('/admin/pagination', name: 'app_paginate')]
 
-        // $prod->consumerConfig($entityManager);
+    public function logDisplay(Request $request, LogRepository $log, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
+    {
+        $response = new JsonResponse();
 
+        if( $request->isMethod('POST') )
+        {
+            $logs = 0;
 
+            $type = $request->request->get('type');
+
+            $module = $request->request->get('module');
+
+            if( isset($type) || isset($module) )
+            {
+                $logs = $log->filter($module, $type);
+            }
+
+            $pagination = $paginator->paginate( $logs,1, 3 );
+
+            $list = $this->render('admin/paginate.html.twig', array('pagination'=>$pagination))->getContent();
+
+            $count = count($logs);
+
+            $loglist = array('pagination'=>$list, 'count'=>$count);
+
+            $response = new JsonResponse($loglist);
+        }
         
-        $logs = $log->findAll();
-
-        return $this->render('admin/index.html.twig', [
-            'logs' =>$logs
-        ]);
+        return $response;
     }
 }
