@@ -59,10 +59,11 @@
                 type: 'POST',
                 url: '{{( path('app_admin_applicant') )}}?page='+currPage,
                 success: function(response){
+                    console.log(response.pagination);
                     numberOfItems =response.count
-                     numberOfPages = Math.ceil(numberOfItems/numberPerPage)
-                     $('#list').empty().append(response.pagination)
-                   
+                    numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                    $('#list').empty().append(response.pagination)
+
                     buildPagination(currPage)
                    
                     

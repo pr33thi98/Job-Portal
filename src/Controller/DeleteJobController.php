@@ -14,7 +14,7 @@ class DeleteJobController extends AbstractController
     #[Route('/delete/job/{id}', name: 'app_delete_job')]
     public function index(Request $request,EntityManagerInterface $entityManager,JobsRepository $repo,$id): Response
     {
-        //$id=$request->request->get('id');
+        
 
         $data = $repo->findOneBy(["id"=>$id]);
 

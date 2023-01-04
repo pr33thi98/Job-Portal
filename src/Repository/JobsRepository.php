@@ -63,4 +63,14 @@ class JobsRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findList($pageNo): array
+    {
+        $firstResult=($pageNo-1)*3;
+        return $this->createQueryBuilder('f')
+                ->select("f")
+                ->setMaxResults(5)
+                ->setFirstResult($firstResult)
+                ->getQuery()
+                ->getArrayResult();
+   }
 }

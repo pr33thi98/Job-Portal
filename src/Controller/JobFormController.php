@@ -39,7 +39,6 @@ class JobFormController extends AbstractController
         }
         return $this->render('job_form/index.html.twig', [
                         'JobsForm' => $form->createView(),
-                    ]);
-            
+        ]);       
    }
 }

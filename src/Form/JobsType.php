@@ -16,6 +16,7 @@ class JobsType extends AbstractType
     {
         $builder
             ->add('job_title', TextType::class, [
+                'required' =>true,
                 'constraints' =>[
                     new NotBlank([
                         'message'=>'Please enter job title'
@@ -26,7 +27,7 @@ class JobsType extends AbstractType
                         'message' => 'Your title is not valid',
                     ]),
                 ],
-                'label' => 'Job Title',
+                'label' => 'Job Title :',
                 'row_attr' => [
                     'class' => 'input-group',
                 ],
@@ -38,7 +39,7 @@ class JobsType extends AbstractType
                         'message' => 'Please enter job description'
                     ])
                 ],
-                'label' => 'Job Description',
+                'label' => 'Job Description :',
                 'row_attr' => [
                 'class' => 'input-group',
                 ],
@@ -50,7 +51,7 @@ class JobsType extends AbstractType
                         'message' => 'Please enter job skills'
                     ])
                 ],
-                'label' => 'Job skills',
+                'label' => 'Job skills :',
                 'row_attr' => [
                     'class' => 'input-group',
                 ],
@@ -67,7 +68,7 @@ class JobsType extends AbstractType
                         'message' => 'your location is not valid',
                     ]),
                 ],
-                'label' => 'Job Location',
+                'label' => 'Job Location :',
                 'row_attr' => [
                     'class' => 'input-group',
                 ],
@@ -84,7 +85,7 @@ class JobsType extends AbstractType
                         'message' => 'Your phone number contain an alphabet',
                     ]),
                 ],
-                'label' => 'Experience',
+                'label' => 'Experience :',
                 'row_attr' => [
                     'class' => 'input-group',
                 ],

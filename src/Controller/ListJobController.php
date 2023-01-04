@@ -22,20 +22,15 @@ class ListJobController extends AbstractController
     #[Route('/list/job/paginate', name:'app_list_paginate')]
     public function paginate(Request $request,JobsRepository $repo,PaginatorInterface $paginator)
     {
-        $jobs = $repo->findAll();
 
-        $limit=1;
 
-        $offset=3;
+       
+        $limit= 1;
 
-        $pagination=$paginator->paginate(
-            $jobs,
-            $request->query->getInt('page',$limit),
-            $offset
-        ) ; 
+        $jobs = $repo->findList($limit);
         
         $list = $this->render('list_job/paginate.html.twig', array(
-            'pagination'=>$pagination
+            'pagination'=>$jobs
 
         ))->getContent();
 
@@ -45,6 +40,7 @@ class ListJobController extends AbstractController
 
         $response = new JsonResponse($userlist);
         
-        return $response;
+         return $response;
+       
     }
 }
