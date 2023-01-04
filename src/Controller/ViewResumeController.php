@@ -15,6 +15,7 @@ class ViewResumeController extends AbstractController
 {
     #[Route('/view/resume/{id}', name: 'app_view_resume')]
     public function index($id,ApplicationRepository $repo,KernelInterface $kernel){
+        
         $data = $repo->find($id);
 
         $name = $repo->fetchname($id);

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ApplicantController extends AbstractController
 {
     #[Route('/applicant', name: 'app_applicant')]
-    public function index(Request $request,ApplicationRepository $repo):Response
+    public function index():Response
     {
         
         return $this->render('applicant/index.html.twig');
@@ -21,18 +21,17 @@ class ApplicantController extends AbstractController
     public function UserList(Request $request,ApplicationRepository $repo,PaginatorInterface $paginator):Response
     {
         $Applications = $repo->findAll(); 
+
         $limit=1;
+
         $offset=3;
+
         $pagination=$paginator->paginate(
             $Applications,
             $request->query->getInt('page',$limit),
             $offset
         ) ; 
-        //  $pagination=$paginator->paginate(
-        //     $Applications,
-        //     $request->query->getInt('page',1),
-        //     3
-        // ); 
+        
         $list = $this->render('applicant/paginate.html.twig', array(
             'pagination'=>$pagination
 

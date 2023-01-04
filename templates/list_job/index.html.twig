@@ -1,7 +1,14 @@
 {% extends 'base2.html.twig' %}
-{% block title %}Hello AdminController!{% endblock %}
+{# {% block title %}Hello AdminController!{% endblock %} #}
+
 {% block body %}
-<h1> Listing of Jobs</h1>
+<h1 class="text-center">Admin Dashboard</h1>
+        {# <h3 class="text-danger">Users List</h3> #}
+
+<br>
+<br>
+<div class="container">
+
 <table border=2 class="table table-hover table-bordered" style="width:50%" >
 <thead><tr class="info" >
 <th class="text-primary">id</th> 
@@ -10,49 +17,82 @@
 <th class="text-primary">Experience</th>
 <th class="text-primary">Location</th>
 <th class = "text-primary">Action</th>
- <tr>
-    {% for job in job %}
-       <tr class="warning"  > 
-       <td>{{job.id}}</td> 
-       <td>{{job.job_title}}</td>
-       <td>{{job.skills}}</td>
-       <td>{{job.experience}}</td>
-       <td>{{job.job_location}}</td>
-       <td><a href="{{absolute_url(asset(''))}}view/job/{{job.id}}">View</a></td>
-       <td><a href="{{absolute_url(asset(''))}}job/form/{{job.id}}">Edit</a></td>
-        <td><form name="form" action="" method="POST"><button  class="btn1 btn-primary active">Delete</button></form> </td>
-       <br><br>
-</tr> 
-{% endfor%} 
+<th class = "text-primary">Action</th>
+<th class = "text-primary">Action</th>
+ </tr></thead><tbody id="list" ></tbody>
  </table>
- {{ knp_pagination_render(job) }}
-<script>
-$(document).ready(function()
-{
-    
-    $('.btn1').click(function()
-    {
-       var currentRow = $(this).closest("tr");
-       var col1 = currentRow.find("td:eq(0)").text();
-       $.ajax(
-                {
-                    type: "POST",
-                    data:{ id:col1},
-                    url: '{{ (path('app_delete_job')) }}',
-                    success: function(response)
-                    {
-                       alert(col1);
-                        alert(response.message);
-                         
-                    },
-                    error: function(result)
-                    {
-                        alert("Process Failed!!!");
-                    }
-                });
-    })
-    
-})
+<div class="paginator"></div>
+
+</div>
+ <script>
+        {# console.log("hi");
+        console.log(listArray); #}
+        var numberOfItems = 0
+        //alert(numberOfItems)
+        //console.log(numberOfItems);
+        var numberPerPage = 3
+        var currentPage = 1
+
+        // Number of pages
+        var numberOfPages = 0
+        //alert(numberOfPages);
+        
+        function accomodatePage(clickedPage) {
+            if (clickedPage <= 1) { return clickedPage + 1}
+            if (clickedPage >= numberOfPages) { return clickedPage -1}
+            return clickedPage
+        }
+
+        function buildPagination(clickedPage) {
+            $('.paginator').empty()
+            const currPageNum = accomodatePage(clickedPage)
+            if (numberOfPages >= 3) {
+                for (let i=-1; i<2; i++) {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${currPageNum+i}">${currPageNum+i}</button>`)
+                }
+            } else {
+                for (let i=0; i<numberOfPages; i++) {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${i+1}">${i+1}</button>`)
+                }
+            }
+        }
+
+        function buildPage(currPage) {
+            $.ajax({
+                type: 'POST',
+                url: '{{( path('app_list_paginate') )}}?page='+currPage,
+                success: function(response){
+                    numberOfItems =response.count
+                     numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                     $('#list').empty().append(response.pagination)
+                   
+                    buildPagination(currPage)
+                   
+                    
+                },
+                error: function (xhr, status, error) {
+                   // alert ("error alert");
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+            
+
+            // $('.grid-uniform').empty().append(listArray.slice(trimStart, trimEnd));
+        }
+
+        $(document).ready(function(){
+            buildPage(1)
+            
+
+            $('.paginator').on('click', 'button', function() {
+                var clickedPage = parseInt($(this).val())
+                
+                console.log(`Page clicked on ${clickedPage}`)
+                buildPage(clickedPage)
+            });
+        });
 </script>
+
 {% endblock %}
+
 

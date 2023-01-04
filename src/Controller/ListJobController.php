@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
@@ -11,21 +10,41 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobsRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 class ListJobController extends AbstractController
 {
     #[Route('/list/job', name: 'app_list_job')]
-    public function index(JobsRepository $repo,Request $request,PaginatorInterface $paginator ): Response
+    public function index(): Response
     {
+        return $this->render('list_job/index.html.twig');
+    }
 
+    #[Route('/list/job/paginate', name:'app_list_paginate')]
+    public function paginate(Request $request,JobsRepository $repo,PaginatorInterface $paginator)
+    {
         $jobs = $repo->findAll();
+
+        $limit=1;
+
+        $offset=3;
+
         $pagination=$paginator->paginate(
             $jobs,
-            $request->query->getInt('page',1),
-            5
-        ); 
+            $request->query->getInt('page',$limit),
+            $offset
+        ) ; 
+        
+        $list = $this->render('list_job/paginate.html.twig', array(
+            'pagination'=>$pagination
 
-        return $this->render('list_job/index.html.twig', [
-            'job' => $pagination,
-        ]);
+        ))->getContent();
+
+        $count=count($jobs);
+
+        $userlist=array('pagination'=>$list,'count'=>$count);
+
+        $response = new JsonResponse($userlist);
+        
+        return $response;
     }
 }

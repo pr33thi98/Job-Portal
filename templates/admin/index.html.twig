@@ -1,25 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-<style>
+{# <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
+</style> #}
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
-    
-     <a href="{{absolute_url(asset(''))}}job/form/[{id}}>ADD JOBS</a>
-     
     <br><br>
-    <form name="form1" action="" method="POST">
-    <button style='font-size:24px' formaction="{{path('app_list_job')}}">click here to list jobs</button>
-    </form>
+     <a href="{{absolute_url(asset(''))}}job/form">ADD JOBS</a>
     <br><br>
-    <form name="form2" action="" method="POST">
-    <button style='font-size:24px' formaction="{{path('app_applicant')}}">click here to list applicants</button>
+    <a href="{{absolute_url(asset(''))}}list/job">LISTING OF JOBS</a>
+    <br><br>
+    {# <form name="form2" action="" method="POST"> #}
+    <a href="{{absolute_url(asset(''))}}applicant">LISTING OF APPLICANTS</a>
+    {# <button style='font-size:24px' formaction="{{path('app_applicant')}}">click here to list applicants</button> #}
     </form>
     
 </div>

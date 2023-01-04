@@ -8,7 +8,9 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
+<div class = "container">
+    <div class = "row">
+        <div class = "col-xs-12">
     
     {{ form_start(JobsForm) }}
         {{ form_row(JobsForm.job_title) }}
@@ -19,6 +21,9 @@
         {{ form_row(JobsForm.expiry)}}
         <button type="submit" class="btn">ADD</button>
     {{ form_end(JobsForm) }}
-    OR <a href="{{ path('app_admin') }}">Back to dashboard</a>
+    OR 
+    <a href="{{ path('app_admin') }}">Back to Admin Dashboard</a>
+        <div>
+    <div>
 </div>
 {% endblock %}

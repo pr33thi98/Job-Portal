@@ -11,11 +11,10 @@ use App\Repository\JobsRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class DeleteJobController extends AbstractController
 {
-    #[Route('/delete/job', name: 'app_delete_job')]
-    public function index(Request $request,EntityManagerInterface $entityManager,JobsRepository $repo): Response
+    #[Route('/delete/job/{id}', name: 'app_delete_job')]
+    public function index(Request $request,EntityManagerInterface $entityManager,JobsRepository $repo,$id): Response
     {
-        $id=$request->request->get('id');
-
+        //$id=$request->request->get('id');
 
         $data = $repo->findOneBy(["id"=>$id]);
 
@@ -31,11 +30,5 @@ class DeleteJobController extends AbstractController
 
         return $response;
 
-
-
-
-        // return $this->render('delete_job/index.html.twig', [
-        //     'controller_name' => 'DeleteJobController',
-        // ]);
     }
 }
