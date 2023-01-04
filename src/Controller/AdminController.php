@@ -42,7 +42,7 @@ class AdminController extends AbstractController
                 $logs = $log->filter($module, $type);
             }
 
-            $pagination = $paginator->paginate( $logs,1, 3 );
+            $pagination = $paginator->paginate( $logs,$request->query->getInt('page',1), 1 );
 
             $list = $this->render('admin/paginate.html.twig', array('pagination'=>$pagination))->getContent();
 
