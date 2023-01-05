@@ -25,32 +25,38 @@ class AdminController extends AbstractController
     
     #[Route('/admin/pagination', name: 'app_paginate')]
 
-    public function logDisplay(Request $request, LogRepository $log, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
+    public function logDisplay(Request $request, LogRepository $log): Response
     {
-        $response = new JsonResponse();
+        $response = new Response();
 
         if( $request->isMethod('POST') )
         {
-            $logs = 0;
+            $pageNo = $request->get('page');
 
-            $type = $request->request->get('type');
+            $type = $request->get('type', '');
 
-            $module = $request->request->get('module');
+            $module = $request->get('module',  '');
+            
 
             if( isset($type) || isset($module) )
             {
-                $logs = $log->filter($module, $type);
+                $logs = $log->filter($module, $type, $pageNo);
             }
 
-            $pagination = $paginator->paginate( $logs,$request->query->getInt('page',1), 1 );
+            if(!empty($logs))
+            {
+                $list = $this->render('admin/paginate.html.twig', array('pagination'=>$logs))->getContent();
 
-            $list = $this->render('admin/paginate.html.twig', array('pagination'=>$pagination))->getContent();
+                $count = $log->recordCount($type, $module);
 
-            $count = count($logs);
+                $loglist = array('pagination'=>$list, 'count'=>$count);
 
-            $loglist = array('pagination'=>$list, 'count'=>$count);
-
-            $response = new JsonResponse($loglist);
+                $response = new JsonResponse($loglist);
+            }
+            else
+            {
+                $loglist = array('pagination'=>'null');
+            }
         }
         
         return $response;

@@ -1,9 +1,13 @@
+{% if pagination =='null' %}
+       No Records
+{% else %}
 {% for log in pagination %}
        <tr class="warning"  > 
         <td>{{log.id}}</td> 
         <td>{{log.userid}}</td>
-        <td>{{log.logtime | date('Y-m-d') }}</td>
+        <td>{{log.logtime | date('Y-m-d H:m:s') }}</td>
         <td>{{log.jobid}}</td>
         <td>{{log.description}}</td>
        </tr> 
 {% endfor%}
+{% endif %}
