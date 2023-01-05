@@ -18,8 +18,6 @@ class AdminController extends AbstractController
     #[Route('/admin/log', name: 'app_log')]
     public function index(LogRepository $repo):Response
     {
-        // $log = $repo->findAll();
-        // return $this->render('admin/index.html.twig', array('logs'=>$log));
         return $this->render('admin/index.html.twig');
     }
     

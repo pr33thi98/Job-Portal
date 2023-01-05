@@ -44,7 +44,7 @@ class LogRepository extends ServiceEntityRepository
     {
         try
         {
-            $firstResult = ($pageNo-1)*3;
+            $firstResult = ($pageNo-1)*5;
 
             $query = $this->createQueryBuilder('f');
             
@@ -53,12 +53,12 @@ class LogRepository extends ServiceEntityRepository
                     $query->andWhere('f.module = :module')
                         ->setParameter('module',$module);
                 }
-                if( !empty($type) || ($type === 0))
+                if( !empty($type) || ($type === '0'))
                 {
                     $query->andwhere('f.type = :type')
                         ->setParameter('type',$type);
                 }
-                $query->setMaxResults(3)
+                $query->setMaxResults(5)
                     ->setFirstResult($firstResult);
             return $query->getQuery()->getResult();
         }
