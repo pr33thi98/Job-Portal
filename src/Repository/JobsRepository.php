@@ -72,5 +72,22 @@ public function findList($pageNo): array
                 ->setFirstResult($firstResult)
                 ->getQuery()
                 ->getArrayResult();
-   }
+    }
+
+//    public function recordCount(): ?int
+//    {
+//         return $this->createQueryBuilder('f')
+//             ->select("count(f.id)")
+//             ->getQuery()
+//             ->getSingleScalarResult(); 
+//    }
+   public function recordCount(): ?int
+   {
+        return $this->createQueryBuilder('f')
+                ->select("count(f.id)")
+                ->getQuery()
+                ->getSingleScalarResult();   
+    }
+
+
 }

@@ -73,4 +73,22 @@ class ApplicationRepository extends ServiceEntityRepository
 
 
     }
+    public function findList($pageNo): array
+    {
+        $firstResult=($pageNo-1)*3;
+        return $this->createQueryBuilder('f')
+                ->select("f")
+                ->setMaxResults(5)
+                ->setFirstResult($firstResult)
+                ->getQuery()
+                ->getArrayResult();
+    }
+    public function recordCount(): ?int
+   {
+        return $this->createQueryBuilder('f')
+                ->select("count(f.id)")
+                ->getQuery()
+                ->getSingleScalarResult();   
+    }
+
 }

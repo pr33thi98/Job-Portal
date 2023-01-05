@@ -20,29 +20,23 @@ class ApplicantController extends AbstractController
     #[Route('/admin/paginate', name: 'app_admin_applicant')]
     public function UserList(Request $request,ApplicationRepository $repo,PaginatorInterface $paginator):Response
     {
-        $Applications = $repo->findAll(); 
+       
+        $limit=$request->get('page');
 
-        $limit=1;
+        $applications = $repo->findList($limit);
 
-        $offset=3;
-
-        $pagination=$paginator->paginate(
-            $Applications,
-            $request->query->getInt('page',$limit),
-            $offset
-        ) ; 
-        
         $list = $this->render('applicant/paginate.html.twig', array(
-            'pagination'=>$pagination
+
+            'pagination'=>$applications
 
         ))->getContent();
 
-        $count=count($Applications);
+        $count=$repo->recordCount();
 
         $userlist=array('pagination'=>$list,'count'=>$count);
 
         $response = new JsonResponse($userlist);
-        
+
         return $response;
     }
 
