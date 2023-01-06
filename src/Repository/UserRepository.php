@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<User>
  *
@@ -37,20 +38,6 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
-    }
-
-    public function loginAuthentication($username)
-    {
-        $username=$this->findOneBy(['username'=>$username]);
-        if ($username != null)
-        {
-            $password = $username->getPassword();
-            $id = $username->getId();
-            $data = ["password"=>$password, "id"=> $id];
-            return $data;
-        }
-        return false;
-        // return $password;
     }
 
     public function fetchUser($id)

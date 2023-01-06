@@ -43,7 +43,8 @@ class JobsRepository extends ServiceEntityRepository
     {
         $firstResult=(($pageNo-1)*5);
         return $this->createQueryBuilder('j')
-            // ->select("DATE_FORMAT(j.expiry,'%d-%m-%y')")
+            // ->select('j')
+            ->select("j.id,j.job_title,j.job_location,j.experience,j.job_description,DATE_FORMAT(j.expiry,'%d-%m-%y') as expiry_date")
             ->andWhere('j.job_title LIKE :val OR j.job_location LIKE :val')
             //    ->where("j.expiry in date('j.expiry') ")
             ->setParameter('val', '%'.$searchPost.'%')
