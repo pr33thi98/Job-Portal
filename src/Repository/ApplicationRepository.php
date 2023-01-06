@@ -42,30 +42,30 @@ class ApplicationRepository extends ServiceEntityRepository
     public function getApplication($pageNo, $userId, $jobId): array
     {
         $firstResult=(($pageNo-1)*5);
-        return $this->createQueryBuilder('a')
-            ->select("a.email, j.job_title, j.job_location")
-            ->innerJoin('App:Job','j', Join::WITH, 'j.id = :jobId')
-            // ->innerJoin('App:User','u', Join::WITH, 'u.id = a.user_id')
-            ->andWhere('a.user_id = :userId')
-            ->setParameter('userId', $userId)
-            ->setFirstResult($firstResult)
-            ->orderBy('a.applied_at', 'DESC')
-            ->setMaxResults(5)
-            ->getQuery()
-            ->getArrayResult()
-       ;
     //     return $this->createQueryBuilder('a')
-    //         ->select("a.email, j.job_title, j.job_location")
-    //         ->innerJoin('App:Job','j', Join::WITH, 'j.id = a.job_id')
+    //         ->select("a.email, j.job_title, j.job_location, a.applied_at")
+    //         ->innerJoinAndSelect('App:Job','j', Join::WITH, 'j.id = :jobId')
     //         // ->innerJoin('App:User','u', Join::WITH, 'u.id = a.user_id')
-    //         ->andWhere('a.user_id = :val')
-    //         ->setParameter('val', $userId)
+    //         ->andWhere('a.user_id = :userId')
+    //         ->setParameter('userId', $userId)
     //         ->setFirstResult($firstResult)
     //         ->orderBy('a.applied_at', 'DESC')
     //         ->setMaxResults(5)
     //         ->getQuery()
     //         ->getArrayResult()
     //    ;
+        return $this->createQueryBuilder('a')
+            ->select("a.email, j.job_title, j.job_location")
+            ->innerJoin('App:Job','j', Join::WITH, 'j.id = a.job_id')
+            // ->innerJoin('App:User','u', Join::WITH, 'u.id = a.user_id')
+            ->andWhere('a.user_id = :val')
+            ->setParameter('val', $userId)
+            ->setFirstResult($firstResult)
+            ->orderBy('a.applied_at', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getArrayResult()
+       ;
     }    
 
     public function recordCount($userId): ?int

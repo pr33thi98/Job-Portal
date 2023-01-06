@@ -262,7 +262,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/userRegister', name: 'app_user_register')]
-    public function register(Request $request,EntityManagerInterface $entityManager, ValidatorInterface $validator):Response
+    public function register(Request $request,EntityManagerInterface $entityManager, ValidatorInterface $validator, UserRepository $repo):Response
     {
         $data = json_decode($request->getContent(),true);
         $uname = $data['uname'];
@@ -308,11 +308,16 @@ class UserController extends AbstractController
             return new Response($errorsString);
         }
 
+        $userCheck=$repo->findOneBy(['username'=>$uname]);
+
+        if($userCheck != null)
+            return new Response(0);
+
         $user = new User();
         $user->setUsername($uname);
         $user->setFirstName($fname);
         $user->setLastName($lname);
-        $date =  new \DateTime($dob);
+        $date = new \DateTime($dob);
         $user->setDob($date);
         $user->setCity($city);
         $user->setPhone($phone);
