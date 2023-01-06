@@ -74,12 +74,12 @@ class LogRepository extends ServiceEntityRepository
         {
             $query =  $this->createQueryBuilder('f')
                            ->select("count(f.id)");
-                if( !empty($type) || ($type === 0))
+                if( !empty($type) || ($type === '0'))
                 {
                     $query->where('f.type = :type')
                           ->setParameter('type',$type);
                 }
-                if(!empty($module) || $module === 0)
+                if(!empty($module) || $module === '0')
                 {
                     $query->andWhere('f.module = :module')
                           ->setParameter('module',$module);

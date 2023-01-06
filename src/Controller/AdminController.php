@@ -35,25 +35,38 @@ class AdminController extends AbstractController
 
             $module = $request->get('module',  '');
             
+            $types = array(0,1,'');
 
-            if( isset($type) || isset($module) )
+            $modules = array(1,2,3,'');
+
+            if(in_array($type,$types) && in_array($module,$modules))
             {
-                $logs = $log->filter($module, $type, $pageNo);
-            }
 
-            if(!empty($logs))
-            {
-                $list = $this->render('admin/paginate.html.twig', array('pagination'=>$logs))->getContent();
+                if( isset($type) || isset($module) )
+                {
+                    $logs = $log->filter($module, $type, $pageNo);
+                }
 
-                $count = $log->recordCount($type, $module);
+                if(!empty($logs))
+                {
+                    $list = $this->render('admin/paginate.html.twig', array('pagination'=>$logs))->getContent();
 
-                $loglist = array('pagination'=>$list, 'count'=>$count);
+                    $count = $log->recordCount($type, $module);
 
-                $response = new JsonResponse($loglist);
+                    $loglist = array('pagination'=>$list, 'count'=>$count);
+
+                    $response = new JsonResponse($loglist);
+                }
+                else
+                {
+                    $loglist = array('pagination'=>'No Records Found');
+
+                    $response = new JsonResponse($loglist);
+                }
             }
             else
             {
-                $loglist = array('pagination'=>'null');
+                $response = false;
             }
         }
         
