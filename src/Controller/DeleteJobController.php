@@ -9,12 +9,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\JobsRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 class DeleteJobController extends AbstractController
 {
     #[Route('/delete/job/{id}', name: 'app_delete_job')]
-    public function index(Request $request,EntityManagerInterface $entityManager,JobsRepository $repo,$id): Response
+    public function index(Request $request,EntityManagerInterface $entityManager,JobsRepository $repo,$id,ValidatorInterface $validator): Response
     {
-        
 
         $data = $repo->findOneBy(["id"=>$id]);
 
@@ -27,6 +28,8 @@ class DeleteJobController extends AbstractController
         $userlist=array('message'=>$message);
 
         $response = new JsonResponse($userlist);
+
+        // alert($response);
 
         return $response;
 

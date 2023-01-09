@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ApplicationRepository;
-use Knp\Component\Pager\PaginatorInterface;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 class ApplicantController extends AbstractController
 {
@@ -18,7 +18,7 @@ class ApplicantController extends AbstractController
         return $this->render('applicant/index.html.twig');
     }
     #[Route('/admin/paginate', name: 'app_admin_applicant')]
-    public function UserList(Request $request,ApplicationRepository $repo,PaginatorInterface $paginator):Response
+    public function UserList(Request $request,ApplicationRepository $repo):Response
     {
        
         $limit=$request->get('page');

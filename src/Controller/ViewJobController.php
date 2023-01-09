@@ -10,24 +10,49 @@ use App\Repository\JobsRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class ViewJobController extends AbstractController
 {
-    #Route('/view/job/form)',name:'app_view_job')]
+    
     #[Route('/view/job/{id}', name: 'app_view_job')]
     public function index($id,Request $request,JobsRepository $repo): Response
     {
         
         $data = $repo->find($id);
 
-        echo "<prev>";
+        $id = $data ->getId();
 
-        print_r($data);
+        $job_title = $data ->getjob_title();
 
-        echo "</prev>";
+        $job_description = $data ->getjob_description();
 
-        exit();
+        $skills = $data ->getSkills();
 
-        return $this->render('view_job/index.html.twig', [
-            'data' => $data,
-        ]);
+        $expiry = $data ->getExpiry();
+
+        $create = $data ->getcreated_at();
+
+        $location = $data ->getjob_location();
+
+        $experience = $data->getExperience();
+
+        return  $this->render('view_job/index.html.twig', array(
+
+           'dat' =>$id,
+
+           'job' =>$job_title,
+
+           'description' => $job_description,
+
+           'expiry'=>$expiry,
+
+           'skills'=>$skills,
+
+           'created'=>$create,
+
+           'location'=>$location,
+
+           'experience' =>$experience
+
+        ));
+
 
         
 

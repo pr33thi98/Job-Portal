@@ -65,9 +65,12 @@ class JobsRepository extends ServiceEntityRepository
 //    }
 public function findList($pageNo): array
     {
-        $firstResult=($pageNo-1)*3;
+        $date =  new \DateTime('@'.strtotime('now'));
+        $firstResult=($pageNo-1)*5;
         return $this->createQueryBuilder('f')
                 ->select("f")
+                ->setParameter('first', $date)
+                ->andWhere('f.expiry >= :first')
                 ->setMaxResults(5)
                 ->setFirstResult($firstResult)
                 ->getQuery()
@@ -83,8 +86,11 @@ public function findList($pageNo): array
 //    }
    public function recordCount(): ?int
    {
+        $date =  new \DateTime('@'.strtotime('now'));
         return $this->createQueryBuilder('f')
                 ->select("count(f.id)")
+                ->setParameter('first', $date)
+                ->andWhere('f.expiry >= :first')
                 ->getQuery()
                 ->getSingleScalarResult();   
     }

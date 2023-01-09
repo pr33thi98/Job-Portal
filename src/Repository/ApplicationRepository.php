@@ -78,7 +78,7 @@ class ApplicationRepository extends ServiceEntityRepository
         $firstResult=($pageNo-1)*3;
         return $this->createQueryBuilder('f')
                 ->select("f")
-                ->setMaxResults(5)
+                ->setMaxResults(3)
                 ->setFirstResult($firstResult)
                 ->getQuery()
                 ->getArrayResult();

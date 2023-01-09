@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobsRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class ListJobController extends AbstractController
@@ -22,7 +21,7 @@ class ListJobController extends AbstractController
     #[Route('/list/job/paginate', name:'app_list_paginate')]
     public function paginate(Request $request,JobsRepository $repo)
     {
-        $limit=$request->get('page');
+        $limit = $request->get('page');
 
         $jobs = $repo->findList($limit);
 
@@ -31,10 +30,10 @@ class ListJobController extends AbstractController
             'pagination'=>$jobs
 
         ))->getContent();
+ 
+        $count = $repo->recordCount();
 
-        $count=$repo->recordCount();
-
-        $userlist=array('pagination'=>$list,'count'=>$count);
+        $userlist = array('pagination'=>$list,'count'=>$count);
 
         $response = new JsonResponse($userlist);
 
