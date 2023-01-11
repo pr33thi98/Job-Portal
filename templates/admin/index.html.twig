@@ -9,7 +9,7 @@
     var l;
     $(document).ready(function()
     {   
-        $('#logType').click(function()
+        $('#logType').change(function()
         {
             var currPage = 1;
             var log = $('#logType').val();
@@ -49,7 +49,7 @@
                     }
                 });
         });
-        $('#module').click(function()
+        $('#module').change(function()
         {
             var currPage = 1;
             var mod = $('#module').val();

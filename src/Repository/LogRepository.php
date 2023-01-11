@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Jobs;
 use App\Entity\Log;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -60,7 +61,7 @@ class LogRepository extends ServiceEntityRepository
                 }
                 $query->setMaxResults(5)
                     ->setFirstResult($firstResult);
-            return $query->getQuery()->getResult();
+            return $logs = $query->getQuery()->getResult();
         }
         catch(Exception $e)
         {
@@ -93,7 +94,24 @@ class LogRepository extends ServiceEntityRepository
         }
     }
 
-    
+    public function fetchuserName(UserRepository $userRepo, $logs)
+    {
+        foreach( $logs as $id)
+        {
+            $uid = $id->getUserId();
+            $user = $userRepo->find($uid);
+            $userName = $user->getUsername();
+            return $userName;
+        }
+    }
+
+    // public function fetchjobName(JobsRepository $jobRepo, $logs)
+    // {
+    //     $jobid = $logs->getJobId();
+    //     $job = $jobRepo->find($jobid);
+    //     $jobName = $job->getJobTitle();
+    //     return $jobName;
+    // }
 //    /**
 //     * @return Log[] Returns an array of Log objects
 //     */

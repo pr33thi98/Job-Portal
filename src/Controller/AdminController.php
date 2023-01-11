@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Class\Producer;
+use App\Repository\JobsRepository;
 use App\Repository\LogRepository;
+use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +25,7 @@ class AdminController extends AbstractController
     
     #[Route('/admin/pagination', name: 'app_paginate')]
 
-    public function logDisplay(Request $request, LogRepository $log): Response
+    public function logDisplay(Request $request, LogRepository $log, UserRepository $u, JobsRepository $j): Response
     {
         $response = new Response();
 
@@ -45,13 +47,21 @@ class AdminController extends AbstractController
                 if( isset($type) || isset($module) )
                 {
                     $logs = $log->filter($module, $type, $pageNo);
+                    $userName = $log->fetchuserName($u, $logs);
+                    // $jobName = $log->fetchjobName($j, $logs);
                 }
 
                 if(!empty($logs))
                 {
+                    // $names = $this->render('admin/paginate.html.twig', array('usernames'=>$userName))->getContent();
+
                     $list = $this->render('admin/paginate.html.twig', array('pagination'=>$logs))->getContent();
 
+                    // $jobNames = $this->render('admin/paginate.html.twig', array('jobs'=>$jobName))->getContent();
+
                     $count = $log->recordCount($type, $module);
+
+                    // $loglist = array('pagination'=>$list, 'count'=>$count, 'usernames'=>$names);
 
                     $loglist = array('pagination'=>$list, 'count'=>$count);
 
