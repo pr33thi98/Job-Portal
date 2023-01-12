@@ -1,0 +1,32 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Hello JobFormController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class = "container">
+    <div class = "row">
+        <div class = "col-xs-12">
+    
+    {{ form_start(JobsForm) }}
+        {{ form_row(JobsForm.job_title) }}
+        {{ form_row(JobsForm.job_description) }}
+        {{ form_row(JobsForm.skills) }}
+        {{ form_row(JobsForm.job_location)}}
+        {{ form_row(JobsForm.experience)}}
+        {{ form_row(JobsForm.expiry)}}
+        <button type="submit" class="btn">ADD</button>
+       
+    {{ form_end(JobsForm) }}
+
+    
+    OR 
+    <a href="{{ path('app_admin') }}">Back to Admin Dashboard</a>
+        <div>
+    <div>
+</div>
+{% endblock %}

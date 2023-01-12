@@ -63,4 +63,32 @@ class ApplicationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function  fetchname($id)
+    {
+        $det = $this->findOneBy(['id' => $id]);
+
+        $resume=$det->getResume();
+
+        return $resume;
+
+
+    }
+    public function findList($pageNo): array
+    {
+        $firstResult=($pageNo-1)*5;
+        return $this->createQueryBuilder('f')
+                ->select("f")
+                ->setMaxResults(5)
+                ->setFirstResult($firstResult)
+                ->getQuery()
+                ->getArrayResult();
+    }
+    public function recordCount(): ?int
+   {
+        return $this->createQueryBuilder('f')
+                ->select("count(f.id)")
+                ->getQuery()
+                ->getSingleScalarResult();   
+    }
+
 }

@@ -1,0 +1,12 @@
+{% for use in pagination%}
+  <tr class="warning"  > 
+       <td>{{use.id}}</td> 
+       <td>{{use.job_title}}</td>
+       <td>{{use.skills}}</td>
+       <td>{{use.experience}}</td>
+       <td>{{use.job_location}}</td>
+       <td><a href="{{absolute_url(asset(''))}}view/job/{{use.id}}">View</a></td>
+       <td><a href="{{absolute_url(asset(''))}}job/form/{{use.id}}">Edit</a></td>
+       <td><a href="{{absolute_url(asset(''))}}delete/job/{{use.id}}">Delete</a></td>   
+</tr>   
+{% endfor%}

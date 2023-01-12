@@ -1,0 +1,91 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+<h1 class="text-center">Listing of Jobs</h1>
+<br>
+<br>
+<div class="container">
+
+<table border=2 class="table table-hover table-bordered" style="width:50%" >
+<thead><tr class="info" >
+<th class="text-primary">id</th> 
+<th class="text-primary">JobTitle</th>
+<th class="text-primary">Skills</th>
+<th class="text-primary">Experience</th>
+<th class="text-primary">Location</th>
+<th class = "text-primary">Action</th>
+<th class = "text-primary">Action</th>
+<th class = "text-primary">Action</th>
+ </tr></thead><tbody id="list" ></tbody>
+ </table>
+<div class="paginator"></div>
+
+</div>
+ <script>
+        {# console.log("hi");
+        console.log(listArray); #}
+        var numberOfItems = 0
+        //alert(numberOfItems)
+        //console.log(numberOfItems);
+        var numberPerPage = 5
+        var currentPage = 1
+
+        // Number of pages
+        var numberOfPages = 0
+        //alert(numberOfPages);
+        
+        function accomodatePage(clickedPage) {
+            if (clickedPage <= 1) { return clickedPage + 1}
+            if (clickedPage >= numberOfPages) { return clickedPage -1}
+            return clickedPage
+        }
+
+        function buildPagination(clickedPage) {
+            $('.paginator').empty()
+            const currPageNum = accomodatePage(clickedPage)
+            if (numberOfPages >= 3) {
+                for (let i=-1; i<2; i++) {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${currPageNum+i}">${currPageNum+i}</button>`)
+                }
+            } else {
+                for (let i=0; i<numberOfPages; i++) {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${i+1}">${i+1}</button>`)
+                }
+            }
+        }
+        function buildPage(currPage) {
+            $.ajax({
+                type: 'POST',
+                url: '{{( path('app_list_paginate') )}}?page='+currPage,
+                success: function(response){
+                    numberOfItems =response.count
+                    console.log( numberOfItems);
+                    console.log(response.pagination);
+                    console.log(response.code);
+                     numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                     $('#list').empty().append(response.pagination)
+                   
+                    buildPagination(currPage)
+                    
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });     
+        }
+
+        $(document).ready(function(){
+            buildPage(1)
+            
+
+            $('.paginator').on('click', 'button', function() {
+                var clickedPage = parseInt($(this).val())
+                
+                console.log(`Page clicked on ${clickedPage}`)
+                buildPage(clickedPage)
+            });
+        });
+</script>
+
+{% endblock %}
+
+

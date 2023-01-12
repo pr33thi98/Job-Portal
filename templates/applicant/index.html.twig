@@ -1,0 +1,92 @@
+{% extends 'base2.html.twig' %}
+{# {% block title %}Hello AdminController!{% endblock %} #}
+
+{% block body %}
+<h1 class="text-center">Applicant Details</h1>
+        {# <h3 class="text-danger">Users List</h3> #}
+
+<br>
+<br>
+<div class="container">
+
+<table border=2 class="table table-hover table-bordered" style="width:50%" >
+<thead><tr class="info" >
+<th class="text-primary">JOB ID</th>    
+
+<th class="text-primary">EMAIL</th>
+<th class="text-primary">ACTION</th>
+
+ </tr></thead><tbody id="list" ></tbody>
+ </table>
+<div class="paginator"></div>
+
+</div>
+ <script>
+        
+        var numberOfItems = 0
+        
+        var numberPerPage = 5
+        var currentPage = 1
+
+       
+        var numberOfPages = 0
+        
+        
+        function accomodatePage(clickedPage) {
+            if (clickedPage <= 1) { return clickedPage + 1}
+            if (clickedPage >= numberOfPages) { return clickedPage -1}
+            return clickedPage
+        }
+
+        function buildPagination(clickedPage) {
+            $('.paginator').empty()
+            const currPageNum = accomodatePage(clickedPage)
+            if (numberOfPages >= 3) {
+                for (let i=-1; i<2; i++) {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${currPageNum+i}">${currPageNum+i}</button>`)
+                }
+            } else {
+                for (let i=0; i<numberOfPages; i++) {
+                    $('.paginator').append(`<button class="btn btn-primary" value="${i+1}">${i+1}</button>`)
+                }
+            }
+        }
+
+        function buildPage(currPage) {
+            $.ajax({
+                type: 'POST',
+                url: '{{( path('app_admin_applicant') )}}?page='+currPage,
+                success: function(response){
+                    console.log(response.pagination);
+                    numberOfItems =response.count
+                    numberOfPages = Math.ceil(numberOfItems/numberPerPage)
+                    $('#list').empty().append(response.pagination)
+
+                    buildPagination(currPage)
+                   
+                    
+                },
+                error: function (xhr, status, error) {
+                   // alert ("error alert");
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+            
+
+            // $('.grid-uniform').empty().append(listArray.slice(trimStart, trimEnd));
+        }
+
+        $(document).ready(function(){
+            buildPage(1)
+            
+
+            $('.paginator').on('click', 'button', function() {
+                var clickedPage = parseInt($(this).val())
+                
+                console.log(`Page clicked on ${clickedPage}`)
+                buildPage(clickedPage)
+            });
+        });
+</script>
+
+{% endblock %}

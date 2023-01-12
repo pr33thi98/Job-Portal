@@ -27,12 +27,6 @@
             <div class="navbar-header">
               {# <h1 style="color:white;font-size:25px;">WELCOME, {{ app.user.UserIdentifier }}</h1> #}
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('app_admin') }}"><span class="glyphicon glyphicon-user"></span>Admin Dashboard</a></li>
-                <li><a href="{{ path('app_login') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-              </ul>
-            </div>
           </div>
         </nav>
         {% block body %}{% endblock %}

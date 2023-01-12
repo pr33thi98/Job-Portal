@@ -1,0 +1,14 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+{# {% for use in dat %} #}
+<p class="text-danger">Job ID: {{ dat}}</p>
+<p class="text-danger">Job Title : {{ job}}</h1>
+<p class="text-danger">Last Date to apply : {{ expiry|date('d-m-Y')}}</p> 
+<p class="text-danger">Job Description : {{description}}</p>
+<p class="text-danger">Skills Required : {{skills}}</p>
+<p class="text-danger">Posted on : {{created |date('d-m-y')}}</p>
+<p class="text-danger">Location: {{location}}</p>
+<p class="text-danger">Experience required to apply this job(Years) : {{experience}} years</p>
+{# <h2>{{use.resume}}</h2> #}
+{# {% endfor %} #}
+{% endblock %} 
