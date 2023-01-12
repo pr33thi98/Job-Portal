@@ -11,6 +11,7 @@ use App\Repository\JobsRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Class\Producer;
 class DeleteJobController extends AbstractController
 {
     #[Route('/delete/job/{id}', name: 'app_delete_job')]
@@ -19,17 +20,32 @@ class DeleteJobController extends AbstractController
 
         $data = $repo->findOneBy(["id"=>$id]);
 
+	$jobId = $id;
+
         $entityManager->remove($data);
 
         $entityManager->flush();
 
         $message = "Job deleted";
 
-        $userlist=array('message'=>$message);
+        $obj = new Producer();
+
+        $userId = '';
+
+        $date = new \DateTime('@'.strtotime('now'));
+
+        //$jobId = $data ->getId();
+
+        $type = 1;
+
+        $description = "job deleted";
+            
+        $obj->producerConfig($userId, $date, $jobId, $type, $description);
+            
+
+        $userlist = array('message'=>$message);
 
         $response = new JsonResponse($userlist);
-
-        // alert($response);
 
         return $response;
 

@@ -14,7 +14,6 @@ class ViewJobController extends AbstractController
     #[Route('/view/job/{id}', name: 'app_view_job')]
     public function index($id,Request $request,JobsRepository $repo): Response
     {
-        
         $data = $repo->find($id);
 
         $id = $data ->getId();
@@ -52,9 +51,5 @@ class ViewJobController extends AbstractController
            'experience' =>$experience
 
         ));
-
-
-        
-
     }
 }

@@ -75,10 +75,10 @@ class ApplicationRepository extends ServiceEntityRepository
     }
     public function findList($pageNo): array
     {
-        $firstResult=($pageNo-1)*3;
+        $firstResult=($pageNo-1)*5;
         return $this->createQueryBuilder('f')
                 ->select("f")
-                ->setMaxResults(3)
+                ->setMaxResults(5)
                 ->setFirstResult($firstResult)
                 ->getQuery()
                 ->getArrayResult();

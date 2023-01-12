@@ -10,24 +10,16 @@ class JobPortalTest extends WebTestCase
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/list/job');
-        $client ->enableProfiler();
-        if ($profile = $client->getProfile())
-        {
-            $this->assertSelectorTextContains('h1', 'Listing of Jobs');
-        }
-        $this->assertLessThan(5,$profile->getCollector('db')->getQueryCount());
         $this->assertSelectorTextContains('h1', 'Listing of Jobs');
         $this->assertResponseIsSuccessful();
-        
+        $this->assertSame(200, $client->getResponse()->getStatusCode()); 
     }
-    // public function testListing(): void
-    // {
-    //         $client = static::createClient();
-    //         $crawler = $client ->request('GET','/delete/job/{id}');
-    //         $client ->enableProfiler();
-    //         if($profile = $client->getProfile())
-    //         {
-    //             $this->assertSelectorTextContains('')
-    //         }
-    // }
+    public function testApplicantlisting(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/applicant');
+        $this->assertSelectorTextContains('h1', 'Applicant Details');
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+    }
 }

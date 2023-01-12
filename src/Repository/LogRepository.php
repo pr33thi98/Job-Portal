@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Log;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @extends ServiceEntityRepository<Log>
@@ -39,6 +40,60 @@ class LogRepository extends ServiceEntityRepository
         }
     }
 
+    public function filter($module, $type, $pageNo)
+    {
+        try
+        {
+            $firstResult = ($pageNo-1)*5;
+
+            $query = $this->createQueryBuilder('f');
+            
+                if(!empty($module))
+                {
+                    $query->andWhere('f.module = :module')
+                        ->setParameter('module',$module);
+                }
+                if( !empty($type) || ($type === '0'))
+                {
+                    $query->andwhere('f.type = :type')
+                        ->setParameter('type',$type);
+                }
+                $query->setMaxResults(5)
+                    ->setFirstResult($firstResult);
+            return $query->getQuery()->getResult();
+        }
+        catch(Exception $e)
+        {
+            print_r($e);
+        }
+    }
+    
+    public function recordCount($type, $module):int
+    {
+        try
+        {
+            $query =  $this->createQueryBuilder('f')
+                           ->select("count(f.id)");
+                if( !empty($type) || ($type === '0'))
+                {
+                    $query->where('f.type = :type')
+                          ->setParameter('type',$type);
+                }
+                if(!empty($module) || $module === '0')
+                {
+                    $query->andWhere('f.module = :module')
+                          ->setParameter('module',$module);
+                }
+                return  $query ->getQuery()
+                               ->getSingleScalarResult();
+        }
+        catch(Exception $e)
+        {
+            print_r($e);
+        }
+    }
+
+    
 //    /**
 //     * @return Log[] Returns an array of Log objects
 //     */

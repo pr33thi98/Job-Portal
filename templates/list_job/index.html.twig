@@ -26,7 +26,7 @@
         var numberOfItems = 0
         //alert(numberOfItems)
         //console.log(numberOfItems);
-        var numberPerPage = 3
+        var numberPerPage = 5
         var currentPage = 1
 
         // Number of pages
@@ -58,6 +58,9 @@
                 url: '{{( path('app_list_paginate') )}}?page='+currPage,
                 success: function(response){
                     numberOfItems =response.count
+                    console.log( numberOfItems);
+                    console.log(response.pagination);
+                    console.log(response.code);
                      numberOfPages = Math.ceil(numberOfItems/numberPerPage)
                      $('#list').empty().append(response.pagination)
                    

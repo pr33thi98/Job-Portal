@@ -77,18 +77,13 @@ public function findList($pageNo): array
                 ->getArrayResult();
     }
 
-//    public function recordCount(): ?int
-//    {
-//         return $this->createQueryBuilder('f')
-//             ->select("count(f.id)")
-//             ->getQuery()
-//             ->getSingleScalarResult(); 
-//    }
+
    public function recordCount(): ?int
    {
         $date =  new \DateTime('@'.strtotime('now'));
         return $this->createQueryBuilder('f')
                 ->select("count(f.id)")
+                //->select("f")
                 ->setParameter('first', $date)
                 ->andWhere('f.expiry >= :first')
                 ->getQuery()

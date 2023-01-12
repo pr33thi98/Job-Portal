@@ -29,6 +29,9 @@ class Log
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $type = null;
 
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $module = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Log
     public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getModule(): ?int
+    {
+        return $this->module;
+    }
+
+    public function setModule(int $module): self
+    {
+        $this->module = $module;
 
         return $this;
     }

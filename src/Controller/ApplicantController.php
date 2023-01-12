@@ -17,6 +17,7 @@ class ApplicantController extends AbstractController
         
         return $this->render('applicant/index.html.twig');
     }
+    
     #[Route('/admin/paginate', name: 'app_admin_applicant')]
     public function UserList(Request $request,ApplicationRepository $repo):Response
     {

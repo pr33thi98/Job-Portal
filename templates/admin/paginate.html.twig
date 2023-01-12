@@ -1,0 +1,27 @@
+{# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"> #}
+       {# $(document).ready(function()
+       {
+              $("td").addClass(function ()
+              {
+                     var newText;
+                     if({{pagination.type}}==0)
+                     {
+                     newText="text-success";
+                     }
+                     else
+                     {
+                     newText="text-danger";
+                     }
+              return newText;
+              });
+       }); #}
+{# </script> #}
+{% for log in pagination %}
+       <tr class="warning"> 
+        <td>{{log.id}}</td> 
+        <td>{{log.userid}}</td>
+        <td>{{log.logtime | date('Y-m-d H:m:s') }}</td>
+        <td>{{log.jobid}}</td>
+        <td>{{log.description}}</td>
+       </tr> 
+{% endfor%}

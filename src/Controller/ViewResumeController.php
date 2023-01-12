@@ -18,7 +18,7 @@ class ViewResumeController extends AbstractController
         
         $data = $repo->find($id);
 
-        $name = $repo->fetchname($id);
+        $name = $data ->getResume();
 
         $this->projectDir = $kernel->getProjectDir();
 

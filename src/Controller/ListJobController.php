@@ -33,7 +33,7 @@ class ListJobController extends AbstractController
  
         $count = $repo->recordCount();
 
-        $userlist = array('pagination'=>$list,'count'=>$count);
+        $userlist = array('pagination'=>$list,'count'=>$count,'code'=>200);
 
         $response = new JsonResponse($userlist);
 
@@ -42,5 +42,5 @@ class ListJobController extends AbstractController
        
     }
        
-    }
+}
 

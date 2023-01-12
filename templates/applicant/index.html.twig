@@ -2,7 +2,7 @@
 {# {% block title %}Hello AdminController!{% endblock %} #}
 
 {% block body %}
-<h1 class="text-center">Admin Dashboard</h1>
+<h1 class="text-center">Applicant Details</h1>
         {# <h3 class="text-danger">Users List</h3> #}
 
 <br>
@@ -11,28 +11,26 @@
 
 <table border=2 class="table table-hover table-bordered" style="width:50%" >
 <thead><tr class="info" >
-<th class="text-primary">ID</th>    
-<th class ="text-primary">RESUME</th>
+<th class="text-primary">JOB ID</th>    
+
 <th class="text-primary">EMAIL</th>
 <th class="text-primary">ACTION</th>
-{# <th class="text-primary">ROLES</th> #}
+
  </tr></thead><tbody id="list" ></tbody>
  </table>
 <div class="paginator"></div>
 
 </div>
  <script>
-        {# console.log("hi");
-        console.log(listArray); #}
+        
         var numberOfItems = 0
-        //alert(numberOfItems)
-        //console.log(numberOfItems);
-        var numberPerPage = 3
+        
+        var numberPerPage = 5
         var currentPage = 1
 
-        // Number of pages
+       
         var numberOfPages = 0
-        //alert(numberOfPages);
+        
         
         function accomodatePage(clickedPage) {
             if (clickedPage <= 1) { return clickedPage + 1}
