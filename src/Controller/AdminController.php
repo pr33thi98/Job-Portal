@@ -47,7 +47,7 @@ class AdminController extends AbstractController
                 if( isset($type) || isset($module) )
                 {
                     $logs = $log->filter($module, $type, $pageNo);
-                    $userName = $log->fetchuserName($u, $logs);
+                    // $userName = $log->fetchuserName($u, $logs);
                     // $jobName = $log->fetchjobName($j, $logs);
                 }
 

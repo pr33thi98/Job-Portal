@@ -94,16 +94,16 @@ class LogRepository extends ServiceEntityRepository
         }
     }
 
-    public function fetchuserName(UserRepository $userRepo, $logs)
-    {
-        foreach( $logs as $id)
-        {
-            $uid = $id->getUserId();
-            $user = $userRepo->find($uid);
-            $userName = $user->getUsername();
-            return $userName;
-        }
-    }
+    // public function fetchuserName(UserRepository $userRepo, $logs)
+    // {
+    //     foreach( $logs as $id)
+    //     {
+    //         $uid = $id->getUserId();
+    //         $user = $userRepo->find($uid);
+    //         $userName = $user->getUsername();
+    //         return $userName;
+    //     }
+    // }
 
     // public function fetchjobName(JobsRepository $jobRepo, $logs)
     // {
