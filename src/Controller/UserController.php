@@ -15,6 +15,9 @@ use App\Repository\ApplicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Application;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 use App\Entity\User;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
@@ -33,8 +36,8 @@ class UserController extends AbstractController
     //     $this->authenticator = $authenticator;
     // }
 
-    #[Route('/userLogin', name: 'app_login')]
-    public function index(Request $request, UserRepository $repo, ValidatorInterface $validator, UserAuthenticatorInterface $userAuthenticator, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    #[Route('/api/login', name: 'app_login')]
+    public function index(Request $request, UserRepository $repo, ValidatorInterface $validator, UserAuthenticatorInterface $userAuthenticator, SecurityAuthenticator $authenticator, EntityManagerInterface $entityManager,UserInterface $user, JWTTokenManagerInterface $JWTManager): Response
     {
         $data = json_decode($request->getContent(),true);
         $username = $data['username'];
@@ -64,13 +67,14 @@ class UserController extends AbstractController
             if($password == $user->getPassword())
             {
                 $userId = $user->getId();
-                $token = base64_encode(json_encode([$userId = $user->getId() , $username = $user->getUsername()]));
+                // csrf_token('authenticate');
+                // $token = base64_encode(json_encode([$userId = $user->getId() , $username = $user->getUsername()]));
 
-                $token = json_encode([$userId = $user->getId() , $username = $user->getUsername()]);
+                // $token = json_encode([$userId = $user->getId() , $username = $user->getUsername()]);
 
-                $response = new JsonResponse([
-                    'token' => $token
-                ]);
+                // $response = new JsonResponse([
+                //     'token' => $token
+                // ]);
                     //     $response = new JsonResponse(["result"=>$result, "id"=>$userId ]);
                 // $userAuthenticator->authenticateUser(
                 //                     $user, 
@@ -80,7 +84,13 @@ class UserController extends AbstractController
                 // $response = new JsonResponse([
                 //     'token' => $token
                 // ]);
-                return $response;
+
+
+                // return $response;
+                // echo("hai");
+                // die();
+
+                // return new JsonResponse(['token' => $JWTManager->create($user)]);
             }
         }
         return new Response("Failed");
@@ -171,7 +181,7 @@ class UserController extends AbstractController
         }        
 
         $jobList = $repo->getJobs($pageNo, $searchPost);
-        $count = $repo->recordCount();
+        $count = $repo->recordCount($searchPost);
         $response = new JsonResponse(["listData"=>$jobList, "total"=> $count]);
         return $response;
     }

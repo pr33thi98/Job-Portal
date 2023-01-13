@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResourse]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface
@@ -77,7 +78,7 @@ class User implements UserInterface
         // $roles[] = 'ROLE_USER';
 
         // return array_unique($roles);
-        return array();
+        return array('ROLE_USER');
     }
 
     public function setRoles(array $roles): self

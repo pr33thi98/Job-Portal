@@ -57,10 +57,12 @@ class JobsRepository extends ServiceEntityRepository
        ;
     }    
 
-    public function recordCount(): ?int
+    public function recordCount($searchPost): ?int
     {
         return $this->createQueryBuilder('j')
                 ->select("count(j.id)")
+                ->andWhere('j.job_title LIKE :val OR j.job_location LIKE :val')
+                ->setParameter('val', '%'.$searchPost.'%')
                 ->getQuery()
                 ->getSingleScalarResult();   
     }
